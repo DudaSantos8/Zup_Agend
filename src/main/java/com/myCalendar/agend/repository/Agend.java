@@ -1,6 +1,5 @@
 package com.myCalendar.agend.repository;
 
-import com.myCalendar.agend.controller.agend.AgendCreateDTO;
 
 import java.sql.Date;
 import java.sql.Time;

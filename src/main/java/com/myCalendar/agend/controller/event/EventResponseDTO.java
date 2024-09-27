@@ -1,15 +1,14 @@
-package com.myCalendar.agend.controller.agend;
+package com.myCalendar.agend.controller.event;
 
 import com.myCalendar.agend.repository.Event;
 
 import java.util.Date;
-import java.util.List;
 
-public class AgendResponseDTO {
+public class EventResponseDTO {
     private Date startDate;
-    private List<Event> events;
+    private Event events;
 
-    public AgendResponseDTO() {
+    public EventResponseDTO() {
     }
 
     public Date getStartDate() {
@@ -20,11 +19,11 @@ public class AgendResponseDTO {
         this.startDate = startDate;
     }
 
-    public List<Event> getEvents() {
+    public Event getEvents() {
         return events;
     }
 
-    public void setEvents(List<Event> events) {
+    public void setEvents(Event events) {
         this.events = events;
     }
 }

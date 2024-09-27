@@ -1,12 +1,10 @@
 package com.myCalendar.agend.controller.agend;
 
-import com.myCalendar.agend.repository.Agend;
 import com.myCalendar.agend.service.AgendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -16,25 +14,35 @@ public class AgendController {
     @Autowired
     private AgendService agentService;
 
-    @GetMapping
-    public List<Agend> getAgend(){
-        return agentService.getAllAgend();
-    }
-
-    @GetMapping("/{startDate}")
-    private ResponseEntity<?> getAgendByDay(@PathVariable String startDate){
-        try{
-            return ResponseEntity.ok(agentService.getAgendByDate(startDate));
-        }catch (RuntimeException e){
-            return ResponseEntity.status(422).body(Map.of("message", e.getMessage()));
+    @GetMapping()
+    public ResponseEntity<?> getAgendOfNextDays( @RequestParam(name = "numberOfDays", required = false) Integer numberOfDays){
+        if(numberOfDays == null){
+            try{
+                return ResponseEntity.ok().body(agentService.getAllAgendOfNextDays(null));
+            }catch (Exception e){
+                return ResponseEntity.status(400).body(Map.of("message", e.getMessage()));
+            }
+        }else if(numberOfDays > 0){
+            try{
+                return ResponseEntity.ok().body(agentService.getAgendOfNextDays(numberOfDays));
+            }catch (Exception e){
+                return ResponseEntity.status(400).body(Map.of("message", e.getMessage()));
+            }
+        } else if (numberOfDays < 0) {
+            try{
+                return ResponseEntity.ok().body(agentService.getAgendOfPreviusDays(numberOfDays));
+            }catch (Exception e){
+                return ResponseEntity.status(400).body(Map.of("message", e.getMessage()));
+            }
         }
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping
     public ResponseEntity<?> postNewEvent(@RequestBody AgendCreateDTO agendCreateDTO){
         try{
-            agentService.save(agendCreateDTO);
-            return ResponseEntity.ok().body(Map.of("message", "Event created"));
+
+            return ResponseEntity.status(201).body(agentService.save(agendCreateDTO));
         }catch (Exception e){
             return ResponseEntity.status(400).body(Map.of("message", e.getMessage()));
         }

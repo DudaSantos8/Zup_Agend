@@ -13,13 +13,13 @@ Add new event
 POST /event
 ```json
 {
-  "dataInicio": Date,
-  "dataFim": Date,
-  "horaInicio": Time,
-  "horaFim": Time,
-  "evento": {
-    "nomeEvento": String,
-    "descricao": String,
+  "startDate": "2024-10-09",
+  "endDate": "2024-10-09",
+  "startTime": "09:00:00",
+  "endTime": "09:30:00",
+  "eventDTO":{
+    "nameEvent": "teste 2",
+    "description": "teste de post 2"
   }
 }
 ```
