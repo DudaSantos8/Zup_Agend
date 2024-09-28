@@ -1,6 +1,8 @@
 package com.myCalendar.agend.controller.agend;
 
+import com.myCalendar.agend.controller.agend.DTO.AgendCreateDTO;
 import com.myCalendar.agend.service.AgendService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +20,7 @@ public class AgendController {
     public ResponseEntity<?> getAgendOfNextDays( @RequestParam(name = "numberOfDays", required = false) Integer numberOfDays){
         if(numberOfDays == null){
             try{
-                return ResponseEntity.ok().body(agentService.getAllAgendOfNextDays(null));
+                return ResponseEntity.ok().body(agentService.getAllAgendOfNextDays());
             }catch (Exception e){
                 return ResponseEntity.status(400).body(Map.of("message", e.getMessage()));
             }
@@ -39,12 +41,12 @@ public class AgendController {
     }
 
     @PostMapping
-    public ResponseEntity<?> postNewEvent(@RequestBody AgendCreateDTO agendCreateDTO){
+    public ResponseEntity<?> postNewEvent(@Valid @RequestBody AgendCreateDTO agendCreateDTO){
         try{
-
-            return ResponseEntity.status(201).body(agentService.save(agendCreateDTO));
+            agentService.save(agendCreateDTO);
+            return ResponseEntity.status(201).body(Map.of("message", "Event created"));
         }catch (Exception e){
-            return ResponseEntity.status(400).body(Map.of("message", e.getMessage()));
+            return ResponseEntity.status(422).body(Map.of("message", e.getMessage()));
         }
     }
 

@@ -1,25 +1,40 @@
-package com.myCalendar.agend.repository;
+package com.myCalendar.agend.controller.agend.DTO;
+
+import com.myCalendar.agend.controller.event.EventCreateDTO;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 import java.sql.Time;
 import java.time.LocalDate;
 
-public class Agend {
+public class AgendCreateDTO {
 
+    @NotNull(message = "This field cannot be null ")
     private LocalDate startDate;
-    private LocalDate endDate;
-    private Time startTime;
-    private Time endTime;
-    private Event event;
 
-    public Agend() {
+    @NotNull(message = "This field cannot be null ")
+    private LocalDate endDate;
+
+    @NotNull(message = "This field cannot be null ")
+    private Time startTime;
+
+    @NotNull(message = "This field cannot be null ")
+    private Time endTime;
+
+    @NotNull(message = "The event cannot be null")
+    @Valid
+    private EventCreateDTO event;
+
+    public AgendCreateDTO() {
     }
 
-    public Event getEvent() {
+
+    public EventCreateDTO getEvent() {
         return event;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setEvent(EventCreateDTO eventDTO) {
+        this.event = eventDTO;
     }
 
     public Time getStartTime() {
@@ -53,4 +68,6 @@ public class Agend {
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
+
+
 }

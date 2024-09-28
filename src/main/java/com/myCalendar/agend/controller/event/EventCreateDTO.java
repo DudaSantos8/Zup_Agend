@@ -1,12 +1,22 @@
 package com.myCalendar.agend.controller.event;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.sql.Time;
 
 public class EventCreateDTO {
 
     private String idEvent;
+
+    @NotBlank(message = "This field cannot be blank")
+    @NotNull(message = "This field cannot be null ")
     private String nameEvent;
+
+    @NotBlank(message = "This field cannot ne blank")
+    @NotNull(message = "This field cannot be null ")
     private String description;
+
     private Time startTime;
     private boolean activeEvent;
 

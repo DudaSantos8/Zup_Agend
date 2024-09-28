@@ -13,18 +13,20 @@ Add new event
 POST /event
 ```json
 {
-  "startDate": "2024-10-09",
-  "endDate": "2024-10-09",
-  "startTime": "09:00:00",
+  "startDate": "2024-10-10",
+  "endDate": "2024-10-10",
+  "startTime": "09:30:00",
   "endTime": "09:30:00",
-  "eventDTO":{
-    "nameEvent": "teste 2",
-    "description": "teste de post 2"
+  "event":{
+    "nameEvent": "Teste",
+    "description": "Teste"
   }
 }
 ```
 Cancel event
-Put /event
-```json
+Patch /event
+Route : localhost:8087/agend/idEvent
 
-```
+Delete event
+delete /event
+Route : localhost:8087/agend/idEvent

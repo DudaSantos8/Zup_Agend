@@ -1,8 +1,7 @@
 package com.myCalendar.agend.service.mapper;
 
-import com.myCalendar.agend.controller.agend.AgendCreateDTO;
-import com.myCalendar.agend.controller.agend.AgendResponseDTO;
-import com.myCalendar.agend.controller.event.EventResponseDTO;
+import com.myCalendar.agend.controller.agend.DTO.AgendCreateDTO;
+import com.myCalendar.agend.controller.agend.DTO.AgendResponseDTO;
 import com.myCalendar.agend.repository.Agend;
 import com.myCalendar.agend.repository.Event;
 
@@ -23,8 +22,8 @@ public class AgendMapper {
 
         newEvent.setIdEvent(generateCode());
         newEvent.setActiveEvent(true);
-        newEvent.setNameEvent(agendCreateDTO.getEventDTO().getNameEvent());
-        newEvent.setDescription(agendCreateDTO.getEventDTO().getDescription());
+        newEvent.setNameEvent(agendCreateDTO.getEvent().getNameEvent());
+        newEvent.setDescription(agendCreateDTO.getEvent().getDescription());
         newEvent.setStartTime(agendCreateDTO.getStartTime());
 
         newAgend.setEvent(newEvent);
@@ -72,25 +71,26 @@ public class AgendMapper {
         agendList.remove(optional.get());
     }
 
-    public static AgendResponseDTO getAllAgendOfNextDays(Integer numberOfDays, List<Agend> agendList){
+    public static AgendResponseDTO getAllAgendOfNextDays(List<Agend> agendList){
         List<Event> listEvent = new ArrayList<>();
         AgendResponseDTO agendResponseDTO = new AgendResponseDTO();
         ZonedDateTime now = ZonedDateTime.now();
+        LocalDate targetDate = now.toLocalDate();
 
-        for(int i = 0; i < agendList.size(); i++){
-            LocalDate targetDate = now.plusDays(i).toLocalDate();
+        for(Agend agend : agendList){
 
-            Optional<Agend> optional = agendList.stream().filter(agend -> agend.getStartDate().toLocalDate()
-                    .equals(targetDate)).findFirst();
-
-            if (optional.isPresent()) {
-                Agend agend = optional.get();
-
+            if(agend.getStartDate().equals(targetDate)){
                 listEvent.add(agend.getEvent());
                 if(agendResponseDTO.getStartDate() == null){
                     agendResponseDTO.setStartDate(agend.getStartDate());
                 }
+            } else if (agend.getStartDate().isAfter(targetDate)) {
+                targetDate = agend.getStartDate();
+                listEvent.add(agend.getEvent());
 
+                if(agendResponseDTO.getStartDate() == null){
+                    agendResponseDTO.setStartDate(agend.getStartDate());
+                }
             }
         }
 
@@ -110,7 +110,7 @@ public class AgendMapper {
         for (int j = 0; j >= numberOfDays; j--){
                 LocalDate targetDate = now.plusDays(j).toLocalDate();
 
-                Optional<Agend> optional = agendList.stream().filter(agend -> agend.getStartDate().toLocalDate()
+                Optional<Agend> optional = agendList.stream().filter(agend -> agend.getStartDate()
                         .equals(targetDate)).findFirst();
 
                 if (optional.isPresent()) {
@@ -141,7 +141,7 @@ public class AgendMapper {
         for(int i = 0; i < numberOfDays; i++){
             LocalDate targetDate = now.plusDays(i).toLocalDate();
 
-            Optional<Agend> optional = agendList.stream().filter(agend -> agend.getStartDate().toLocalDate().plusDays(1)
+            Optional<Agend> optional = agendList.stream().filter(agend -> agend.getStartDate()
                     .equals(targetDate)).findFirst();
 
             if (optional.isPresent()) {

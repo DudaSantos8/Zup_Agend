@@ -1,7 +1,7 @@
 package com.myCalendar.agend.service;
 
-import com.myCalendar.agend.controller.agend.AgendCreateDTO;
-import com.myCalendar.agend.controller.agend.AgendResponseDTO;
+import com.myCalendar.agend.controller.agend.DTO.AgendCreateDTO;
+import com.myCalendar.agend.controller.agend.DTO.AgendResponseDTO;
 import com.myCalendar.agend.repository.Agend;
 import com.myCalendar.agend.service.mapper.AgendMapper;
 import org.springframework.stereotype.Service;
@@ -31,8 +31,8 @@ public class AgendServiceImpl implements AgendService{
     }
 
     @Override
-    public AgendResponseDTO getAllAgendOfNextDays(Integer numberOfDays) {
-        return AgendMapper.getAllAgendOfNextDays(numberOfDays, agendList);
+    public AgendResponseDTO getAllAgendOfNextDays() {
+        return AgendMapper.getAllAgendOfNextDays(agendList);
     }
 
     @Override

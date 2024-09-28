@@ -1,7 +1,7 @@
 package com.myCalendar.agend.service;
 
-import com.myCalendar.agend.controller.agend.AgendCreateDTO;
-import com.myCalendar.agend.controller.agend.AgendResponseDTO;
+import com.myCalendar.agend.controller.agend.DTO.AgendCreateDTO;
+import com.myCalendar.agend.controller.agend.DTO.AgendResponseDTO;
 import com.myCalendar.agend.repository.Agend;
 
 public interface AgendService {
@@ -12,7 +12,7 @@ public interface AgendService {
 
     void delete(String idEvent);
 
-    AgendResponseDTO getAllAgendOfNextDays(Integer numberOfDays);
+    AgendResponseDTO getAllAgendOfNextDays();
 
     AgendResponseDTO getAgendOfPreviusDays(Integer numberOfDays);
 
