@@ -2,11 +2,10 @@ package com.myCalendar.agend.service;
 
 import com.myCalendar.agend.controller.agend.DTO.AgendCreateDTO;
 import com.myCalendar.agend.controller.agend.DTO.AgendResponseDTO;
-import com.myCalendar.agend.repository.Agend;
 
 public interface AgendService {
 
-    Agend save(AgendCreateDTO agendCreateDTO);
+    void save(AgendCreateDTO agendCreateDTO);
 
     void update(String idEvent);
 
@@ -18,4 +17,5 @@ public interface AgendService {
 
     AgendResponseDTO getAgendOfNextDays(Integer numberOfDays);
 
+    AgendResponseDTO getAllEventsByActivation(String activeEvent);
 }

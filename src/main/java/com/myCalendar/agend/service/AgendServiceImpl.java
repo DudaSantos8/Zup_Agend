@@ -14,10 +14,9 @@ public class AgendServiceImpl implements AgendService{
     List<Agend> agendList = new ArrayList<>();
 
     @Override
-    public Agend save(AgendCreateDTO agendCreateDTO) {
+    public void save(AgendCreateDTO agendCreateDTO) {
         Agend agend = AgendMapper.createEvent(agendCreateDTO);
         agendList.add(agend);
-        return agend;
     }
 
     @Override
@@ -42,6 +41,17 @@ public class AgendServiceImpl implements AgendService{
     @Override
     public AgendResponseDTO getAgendOfNextDays(Integer numberOfDays) {
         return AgendMapper.getAgendOfNextDays(numberOfDays, agendList);
+    }
+
+    @Override
+    public AgendResponseDTO getAllEventsByActivation(String activeEvent) {
+        if(activeEvent.equals("true")){
+            return AgendMapper.getAllActiveEvents(agendList);
+        }else if(activeEvent.equals("false")){
+            return AgendMapper.getAllCanceledEvents(agendList);
+        }else{
+            throw new RuntimeException("Param invalid");
+        }
     }
 
 }

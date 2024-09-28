@@ -16,6 +16,15 @@ public class AgendController {
     @Autowired
     private AgendService agentService;
 
+    @GetMapping("/{activeEvent}")
+    public ResponseEntity<?> getAllEventsByActivation(@PathVariable String activeEvent){
+        try{
+            return ResponseEntity.ok().body(agentService.getAllEventsByActivation(activeEvent));
+        }catch (Exception e){
+            return ResponseEntity.status(400).body(Map.of("message", e.getMessage()));
+        }
+    }
+
     @GetMapping()
     public ResponseEntity<?> getAgendOfNextDays( @RequestParam(name = "numberOfDays", required = false) Integer numberOfDays){
         if(numberOfDays == null){

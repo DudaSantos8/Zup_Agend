@@ -8,6 +8,7 @@ import com.myCalendar.agend.repository.Event;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AgendMapper {
 
@@ -164,4 +165,47 @@ public class AgendMapper {
         return agendResponseDTO;
     }
 
+    public static AgendResponseDTO getAllActiveEvents(List<Agend> agendList){
+        List<Event> listEvent = new ArrayList<>();
+        AgendResponseDTO agendResponseDTO = new AgendResponseDTO();
+
+        for(Agend agend : agendList){
+            if(agend.getEvent().getActiveEvent()){
+                listEvent.add(agend.getEvent());
+                if(agendResponseDTO.getStartDate() == null){
+                    agendResponseDTO.setStartDate(agend.getStartDate());
+                }
+            }
+        }
+
+        if(listEvent.isEmpty()){
+            throw new RuntimeException("no active events");
+        }else{
+            agendResponseDTO.setEvents(listEvent);
+        }
+
+        return agendResponseDTO;
+    }
+
+    public static AgendResponseDTO getAllCanceledEvents( List<Agend> agendList){
+        List<Event> listEvent = new ArrayList<>();
+        AgendResponseDTO agendResponseDTO = new AgendResponseDTO();
+
+        for(Agend agend : agendList){
+            if(!agend.getEvent().getActiveEvent()){
+                listEvent.add(agend.getEvent());
+                if(agendResponseDTO.getStartDate() == null){
+                    agendResponseDTO.setStartDate(agend.getStartDate());
+                }
+            }
+        }
+
+        if(listEvent.isEmpty()){
+            throw new RuntimeException("no active events");
+        }else{
+            agendResponseDTO.setEvents(listEvent);
+        }
+
+        return agendResponseDTO;
+    }
 }

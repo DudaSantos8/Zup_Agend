@@ -56,3 +56,29 @@ Route : localhost:8087/agend/idEvent
 Del event
 DELETE / event
 Route : localhost:8087/agend/idEvent
+
+See filtered events by activeEvent
+GET /event
+Route : localhost:8087/agend/{boolean}
+Return:
+```json
+{
+  "startDate": "2024-10-20",
+  "events": [
+    {
+      "idEvent": "RQvJt5",
+      "nameEvent": "Teste dnjslka",
+      "description": "Teste dasvgbdfvp",
+      "startTime": "09:30:00",
+      "activeEvent": true
+    },
+    {
+      "idEvent": "8VYPV1",
+      "nameEvent": "Teste dnjslka",
+      "description": "Teste dasvgbdfvp",
+      "startTime": "09:30:00",
+      "activeEvent": true
+    }
+  ]
+}
+```

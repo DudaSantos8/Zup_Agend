@@ -13,7 +13,7 @@ import java.util.List;
 public class AgendAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public List<Errors> tratarExcecoesValidacao(MethodArgumentNotValidException exception){
         List<Errors> errors = new ArrayList<>();
 
